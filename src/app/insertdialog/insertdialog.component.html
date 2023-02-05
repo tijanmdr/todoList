@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Add a task</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="taskForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>Task (Required)</mat-label>
+            <input matInput type="text" value="" formControlName="task" />
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Additional information (Optional)</mat-label>
+            <textarea matInput type="text" value="" formControlName="info" ></textarea>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Color</mat-label>
+            <mat-select formControlName="_color">
+                <mat-option *ngFor="let tile of tileColors" [value]="tile.color">{{tile.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-flat-button mat-dialog-close color="warn">Cancel</button>
+    <button mat-flat-button color="primary" (click)="insertTask()"
+        cdkFocusInitial>{{actionBtn}}</button>
+</mat-dialog-actions>
