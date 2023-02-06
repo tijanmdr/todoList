@@ -1,3 +1,4 @@
+import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -7,8 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { MatIconModule } from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIcon, MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
@@ -21,23 +23,30 @@ import { InsertdialogComponent } from './insertdialog/insertdialog.component';
 import { LoginComponent } from './login/login.component';
 import { MatOptionModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
+const appRoute : Routes = [
+  {'path': '', 'component': DashboardComponent},
+  {'path': 'login', 'component': LoginComponent},
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     InsertdialogComponent,
     LoginComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot(appRoute),
     AppRoutingModule,
     BrowserAnimationsModule, 
     FormsModule,
     ReactiveFormsModule, 
     HttpClientModule,
     MatToolbarModule,
-    MatIconModule,
+    MatCardModule,
     MatButtonModule, 
     MatDialogModule,
     MatInputModule,
@@ -46,7 +55,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatSnackBarModule,
     MatGridListModule,
     MatOptionModule, 
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

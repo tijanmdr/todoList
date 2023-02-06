@@ -41,6 +41,27 @@ export class InsertdialogComponent {
       this.taskForm.controls['_color'].setValue(this.editData._color)
     }
   }
+  deleteTask() {
+      if (this.editData.id) {
+        this.api.deleteTask(this.editData, this.editData.id)
+        .subscribe({
+          next:(res)=> {
+            this.taskForm.reset()
+            this.dialogRef.close('delete')
+            this._snackBar.open("Task deleted!", "OK", {
+              horizontalPosition: "right",
+              verticalPosition: "top",
+            });
+          },
+          error: () => {
+            this._snackBar.open("There was some error while deleting a task!", "Close", {
+              horizontalPosition: "right",
+              verticalPosition: "top",
+            });
+          }
+        })
+      }
+  }
   insertTask() {
     if (this.taskForm.valid) {
       if (this.editData) {

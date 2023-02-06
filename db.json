@@ -1,64 +1,10 @@
 {
   "tasks": [
     {
-      "task": "Tijan Manandhar",
-      "info": "asdf",
+      "task": "asdfasdf",
+      "info": "",
       "_color": "lightgreen",
       "id": 1
-    },
-    {
-      "task": "asdf",
-      "info": "asdf",
-      "_color": "lightpink",
-      "id": 2
-    },
-    {
-      "task": "asdf",
-      "info": "asdfasdf",
-      "_color": "lightblue",
-      "id": 3
-    },
-    {
-      "task": "dsfg",
-      "info": "",
-      "_color": "lightgreen",
-      "id": 4
-    },
-    {
-      "task": "asdf",
-      "info": "",
-      "_color": "lightpink",
-      "id": 5
-    },
-    {
-      "task": "asdf",
-      "info": "",
-      "_color": "#DDBDF1",
-      "id": 6
-    },
-    {
-      "task": "asdf",
-      "info": "",
-      "_color": "lightblue",
-      "id": 7
-    },
-    {
-      "task": "asdf",
-      "info": "",
-      "_color": "lightpink",
-      "id": 8
-    },
-    {
-      "task": "things to do",
-      "info": "",
-      "_color": "lightgreen",
-      "id": 9
-    },
-    {
-      "task": "adsfd",
-      "info": "",
-      "_color": "#DDBDF1",
-      "id": 10
     }
   ]
 }

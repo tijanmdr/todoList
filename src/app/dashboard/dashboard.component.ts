@@ -1,22 +1,21 @@
-import { ApiService } from './services/api.service';
-import { InsertdialogComponent } from './insertdialog/insertdialog.component';
+import { ApiService } from './../services/api.service';
+import { InsertdialogComponent } from './../insertdialog/insertdialog.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-
-export class AppComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   title = 'To Do List';
   tasks !: any[];
   isDataEmpty = 0;
 
   constructor(private dialog : MatDialog, private api : ApiService) {}
 
-  typesOfTasks:AppComponent[] = [];
+  typesOfTasks:DashboardComponent[] = [];
   ngOnInit(): void {
     this.loadTasks()
   }
@@ -47,14 +46,15 @@ export class AppComponent implements OnInit {
         this.isDataEmpty = 0
         this.loadTasks()
       } else {
-        this.tasks.forEach(res=>{
-          if (res.id === result.id) {
-            console.log(123)
-            res.task = result.task
-            res.info = result.info
-            res._color = result._color
-          }
-        })
+        if (result) {
+          this.tasks.forEach(res=>{
+            if (res.id === result.id) {
+              res.task = result.task
+              res.info = result.info
+              res._color = result._color
+            }
+          })
+        }
       }
       this.isDataEmpty = 1
     });

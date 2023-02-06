@@ -16,6 +16,10 @@ export class ApiService {
     return this.http.put<any>("http://localhost:3000/tasks/"+id, data )
   }
 
+  deleteTask(data : any, id:number) {
+    return this.http.delete<any>("http://localhost:3000/tasks/"+id, data)
+  }
+
   getTasks () {
     return this.http.get<any>("http://localhost:3000/tasks/")
   }

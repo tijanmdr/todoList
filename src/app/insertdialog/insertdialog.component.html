@@ -17,8 +17,9 @@
         </mat-form-field>
     </form>
 </mat-dialog-content>
-<mat-dialog-actions align="center">
+<mat-dialog-actions>
     <button mat-flat-button mat-dialog-close color="warn">Cancel</button>
+    <span *ngIf="this.editData"><button mat-flat-button (click)="deleteTask()" color="warn">Delete</button></span>
     <button mat-flat-button color="primary" (click)="insertTask()"
         cdkFocusInitial>{{actionBtn}}</button>
 </mat-dialog-actions>
