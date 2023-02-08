@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ApiService } from './../services/api.service';
 import { InsertdialogComponent } from './../insertdialog/insertdialog.component';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,7 @@ export class DashboardComponent implements OnInit {
   tasks !: any[];
   isDataEmpty = 0;
 
-  constructor(private dialog : MatDialog, private api : ApiService) {}
+  constructor(private dialog : MatDialog, private api : ApiService, private router : Router) {}
 
   typesOfTasks:DashboardComponent[] = [];
   ngOnInit(): void {
@@ -69,5 +70,10 @@ export class DashboardComponent implements OnInit {
       this.tasks.push(result)
       this.isDataEmpty = 1
     });
+  }
+
+  logout() {
+    localStorage.removeItem('user')
+    this.router.navigate(['login']);
   }
 }

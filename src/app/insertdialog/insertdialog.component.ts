@@ -13,12 +13,22 @@ export class InsertdialogComponent {
   taskForm !: FormGroup;
   actionBtn:String = 'Insert';
 
+  _snackbar_settings:Object= {
+    horizontalPosition: "right",
+    verticalPosition: "bottom",
+    duration: 5000
+  }
+
+  _snackbar_btn_text = 'OK'
+
   tileColors : any[] = [
     {'color':'lightblue', 'name':'Light Blue'},
     {'color':'lightgreen', 'name':'Light Green'},
     {'color':'lightpink', 'name':'Light Pink'},
     {'color':'#DDBDF1', 'name':'Light Purple'},
   ];
+
+  selectedOption: String = 'lightblue';
 
   constructor (private formBuilder : FormBuilder, 
     private api : ApiService, 
@@ -48,16 +58,10 @@ export class InsertdialogComponent {
           next:(res)=> {
             this.taskForm.reset()
             this.dialogRef.close('delete')
-            this._snackBar.open("Task deleted!", "OK", {
-              horizontalPosition: "right",
-              verticalPosition: "top",
-            });
+            this._snackBar.open("Task deleted!", this._snackbar_btn_text, this._snackbar_settings);
           },
           error: () => {
-            this._snackBar.open("There was some error while deleting a task!", "Close", {
-              horizontalPosition: "right",
-              verticalPosition: "top",
-            });
+            this._snackBar.open("There was some error while deleting a task!", this._snackbar_btn_text, this._snackbar_settings);
           }
         })
       }
@@ -70,16 +74,10 @@ export class InsertdialogComponent {
           next:(res) => {
             this.taskForm.reset()
             this.dialogRef.close(res)
-            this._snackBar.open("Task updated!", "OK", {
-              horizontalPosition: "right",
-              verticalPosition: "top",
-            });
+            this._snackBar.open("Task updated!", this._snackbar_btn_text, this._snackbar_settings);
           },
           error: () => {
-            this._snackBar.open("There was some error while adding a task!", "Close", {
-              horizontalPosition: "right",
-              verticalPosition: "top",
-            });
+            this._snackBar.open("There was some error while adding a task!", this._snackbar_btn_text, this._snackbar_settings);
           }
         })  
       } else {
@@ -88,16 +86,10 @@ export class InsertdialogComponent {
           next:(res) => {
             this.taskForm.reset()
             this.dialogRef.close(res)
-            this._snackBar.open("Task added!", "OK", {
-              horizontalPosition: "right",
-              verticalPosition: "top",
-            });
+            this._snackBar.open("Task added!", this._snackbar_btn_text, this._snackbar_settings);
           },
           error: () => {
-            this._snackBar.open("There was some error while adding a task!", "Close", {
-              horizontalPosition: "right",
-              verticalPosition: "top",
-            });
+            this._snackBar.open("There was some error while adding a task!", this._snackbar_btn_text, this._snackbar_settings);
           }
         })
       }

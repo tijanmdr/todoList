@@ -5,6 +5,36 @@
       "info": "",
       "_color": "lightgreen",
       "id": 1
+    },
+    {
+      "task": "asdf",
+      "info": "",
+      "_color": "lightgreen",
+      "id": 2
+    },
+    {
+      "task": "asdf",
+      "info": "",
+      "_color": "lightgreen",
+      "id": 3
+    },
+    {
+      "task": "go to shopping",
+      "info": "",
+      "_color": "lightpink",
+      "id": 4
+    }
+  ],
+  "users": [
+    {
+      "email": "tijanmdr@gmail.com",
+      "pwd": "qwerty123",
+      "id": 1
+    },
+    {
+      "email": "qaroqy@mailinator.com",
+      "password": "tijanmdr",
+      "id": 2
     }
   ]
 }

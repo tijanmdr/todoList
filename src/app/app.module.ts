@@ -20,21 +20,23 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatGridListModule} from '@angular/material/grid-list';
 
 import { InsertdialogComponent } from './insertdialog/insertdialog.component';
-import { LoginComponent } from './login/login.component';
+import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { MatOptionModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const appRoute : Routes = [
   {'path': '', 'component': DashboardComponent},
-  {'path': 'login', 'component': LoginComponent},
+  {'path': 'dashboard', 'component': DashboardComponent},
+  {'path': 'login', 'component': AuthenticateComponent},
+  {'path': 'register', 'component': AuthenticateComponent},
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     InsertdialogComponent,
-    LoginComponent,
+    AuthenticateComponent,
     DashboardComponent,
   ],
   imports: [

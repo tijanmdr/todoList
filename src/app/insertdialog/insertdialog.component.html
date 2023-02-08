@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Add a task</h2>
+<h2 mat-dialog-title><span *ngIf="this.editData">Update</span><span *ngIf="!this.editData">Add</span> task</h2>
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="taskForm">
         <mat-form-field class="example-full-width">
@@ -11,15 +11,17 @@
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <mat-label>Color</mat-label>
-            <mat-select formControlName="_color">
+            <mat-select formControlName="_color" [(ngModel)]="selectedOption">
                 <mat-option *ngFor="let tile of tileColors" [value]="tile.color">{{tile.name}}</mat-option>
             </mat-select>
         </mat-form-field>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-flat-button mat-dialog-close color="warn">Cancel</button>
-    <span *ngIf="this.editData"><button mat-flat-button (click)="deleteTask()" color="warn">Delete</button></span>
+    <button mat-flat-button mat-dialog-close color="warn"><mat-icon>clear</mat-icon>Cancel</button>
+    <span *ngIf="this.editData">
+        <button mat-flat-button (click)="deleteTask()" color="warn"><mat-icon>delete_forever</mat-icon>Delete</button>
+    </span>
     <button mat-flat-button color="primary" (click)="insertTask()"
-        cdkFocusInitial>{{actionBtn}}</button>
+        cdkFocusInitial><mat-icon>{{this.editData?'save_alt':'add_circle'}}</mat-icon>{{actionBtn}}</button>
 </mat-dialog-actions>

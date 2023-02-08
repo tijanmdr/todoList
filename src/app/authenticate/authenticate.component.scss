@@ -1,0 +1,17 @@
+div.login {
+  display: grid;
+  justify-content: space-around;
+  align-content: center;
+
+  mat-card {
+    margin-top: 8vw;
+  }
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+mat-dialog-actions {
+  justify-content: space-around;
+}

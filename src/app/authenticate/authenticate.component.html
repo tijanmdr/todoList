@@ -1,0 +1,31 @@
+<div class="login">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-content *ngIf="url===0">Don't have an account? <a routerLink="/register">Register here!</a></mat-card-content>
+            <mat-card-content *ngIf="url===1">Already have an account? <a routerLink="/login">Login here!</a></mat-card-content>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-header>
+            <mat-card-title *ngIf="url===0">Login</mat-card-title>
+            <mat-card-title *ngIf="url===1">Register</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form class="example-form" [formGroup]="authenticateForm">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" type="email" name="email" required>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password" type="password" name="password" required>
+                </mat-form-field>
+            </form>
+            <mat-form-field class="example-full-width" *ngIf="url===1">
+                <mat-label>Password Confirmation</mat-label>
+                <input matInput [(ngModel)]="password_confirmation" type="password" name="password_confirmation" required>
+            </mat-form-field>
+            <button mat-flat-button (click)="login()" color="primary" *ngIf="url===0">Login</button>
+            <button mat-flat-button (click)="register()" color="primary" *ngIf="url===1">Register</button>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -5,22 +5,31 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
+  baseUrl = 'http://localhost:3000/'
 
   constructor(private http : HttpClient) { }
 
   postTask(data : any) {
-    return this.http.post<any>("http://localhost:3000/tasks", data )
+    return this.http.post<any>(this.baseUrl+"tasks", data)
   }
   
   updateTask(data : any, id:number) {
-    return this.http.put<any>("http://localhost:3000/tasks/"+id, data )
+    return this.http.put<any>(this.baseUrl+"tasks/"+id, data)
   }
 
   deleteTask(data : any, id:number) {
-    return this.http.delete<any>("http://localhost:3000/tasks/"+id, data)
+    return this.http.delete<any>(this.baseUrl+"tasks/"+id, data)
   }
 
   getTasks () {
-    return this.http.get<any>("http://localhost:3000/tasks/")
+    return this.http.get<any>(this.baseUrl+"tasks")
+  }
+  
+  postUser(data : any) {
+    return this.http.post<any>(this.baseUrl+"users", data )
+  }
+
+  getUser (email:string, pwd:string) {
+    return this.http.get<any>(this.baseUrl+"users?email="+email+"&pwd="+pwd)
   }
 }
