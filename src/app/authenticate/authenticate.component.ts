@@ -18,14 +18,6 @@ export class AuthenticateComponent {
 
   password_confirmation: string = "";
 
-  _snackbar_settings:Object= {
-    horizontalPosition: "right",
-    verticalPosition: "bottom",
-    duration: 5000
-  }
-
-  _snackbar_btn_text = 'OK'
-
   url: number = 0;
 
   ngOnInit() {
@@ -46,25 +38,21 @@ export class AuthenticateComponent {
           next: (res) => {
             this.authenticateForm.reset()
             if (res.length > 0) {
-              this._snackBar.open("Login successful!", this._snackbar_btn_text, this._snackbar_settings);
+              this.openSnackBar("Login successful!")
               localStorage.setItem('user', JSON.stringify(res))
               this.router.navigate(['/'])
             } else {
-              this._snackBar.open("Couldn't find user. Please try again!", this._snackbar_btn_text, this._snackbar_settings);
+              this.openSnackBar("Couldn't find user. Please try again!")
             }
 
           }, error: (res) => {
-            this._snackBar.open("Server Error!", this._snackbar_btn_text, this._snackbar_settings);
+            this.openSnackBar('Server Error!')
           }
         })
 
     } else {
-      this._snackBar.open("Something wrong with the registration data. Please fill up the inputs correctly!", "Close", {
-        horizontalPosition: "center",
-        verticalPosition: "bottom",
-      });
+      this.openSnackBar('Something wrong with the registration data. Please fill up the inputs correctly!')
     }
-    console.log(this.router.url);
   }
 
   register(): void {
@@ -74,18 +62,26 @@ export class AuthenticateComponent {
           .subscribe({
             next: (res) => {
               this.authenticateForm.reset()
-              this._snackBar.open("Account creation successful!", this._snackbar_btn_text, this._snackbar_settings);
+              this.openSnackBar('Account creation successful!')
               this.router.navigate(['/login'])
 
             }, error: (res) => {
-              this._snackBar.open("Server Error!", this._snackbar_btn_text, this._snackbar_settings);
+              this.openSnackBar('Server Error!')
             }
           })
       } else {
-        this._snackBar.open("Passwords does not match!", this._snackbar_btn_text, this._snackbar_settings);
+        this.openSnackBar('Passwords does not match!')
       }
     } else {
-      this._snackBar.open("Something wrong with the registration data. Please fill up the inputs correctly!", this._snackbar_btn_text, this._snackbar_settings);
+      this.openSnackBar('Something wrong with the registration data. Please fill up the inputs correctly!')
     }
+  }
+
+  openSnackBar(msg:string) {
+    this._snackBar.open(msg, "OK", {
+      horizontalPosition: "right",
+      verticalPosition: "bottom",
+      duration: 5000
+    });
   }
 }
