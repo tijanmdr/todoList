@@ -21,8 +21,8 @@ export class ApiService {
     return this.http.delete<any>(this.baseUrl+"tasks/"+id, data)
   }
 
-  getTasks () {
-    return this.http.get<any>(this.baseUrl+"tasks")
+  getTasks (user:number) {
+    return this.http.get<any>(this.baseUrl+"tasks?user="+user)
   }
   
   postUser(data : any) {
@@ -30,6 +30,6 @@ export class ApiService {
   }
 
   getUser (email:string, pwd:string) {
-    return this.http.get<any>(this.baseUrl+"users?email="+email+"&pwd="+pwd)
+    return this.http.get<any>(this.baseUrl+"users?email="+email+"&password="+pwd)
   }
 }

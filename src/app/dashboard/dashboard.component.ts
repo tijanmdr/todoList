@@ -13,6 +13,10 @@ export class DashboardComponent implements OnInit {
   title = 'To Do List';
   tasks !: any[];
   isDataEmpty = 0;
+  user = {
+    id: 0, 
+    email: null
+  };
 
   constructor(private dialog : MatDialog, private api : ApiService, private router : Router) {}
 
@@ -22,12 +26,17 @@ export class DashboardComponent implements OnInit {
     // check if the user is logged in or not
     if ( !localStorage.getItem('user')) 
       this.router.navigate(['/login'])
+    else {
+      let userCheck = JSON.parse(localStorage.getItem('user') as string)
+      this.user.id = userCheck.id
+      this.user.email = userCheck.email
+      this.loadTasks(userCheck.id)
+    }
     
-    this.loadTasks()
   }
   
-  loadTasks() {
-    this.api.getTasks()
+  loadTasks(user:number) {
+    this.api.getTasks(user)
     .subscribe({
       next : (res) => {
         this.tasks = res
@@ -50,7 +59,7 @@ export class DashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
         this.isDataEmpty = 0
-        this.loadTasks()
+        this.loadTasks(this.user.id)
       } else {
         if (result) {
           this.tasks.forEach(res=>{

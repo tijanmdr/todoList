@@ -13,6 +13,11 @@ export class InsertdialogComponent {
   taskForm !: FormGroup;
   actionBtn:String = 'Insert';
 
+  user = {
+    id: null, 
+    email: null
+  };
+
   tileColors : any[] = [
     {'color':'lightblue', 'name':'Light Blue'},
     {'color':'lightgreen', 'name':'Light Green'},
@@ -29,6 +34,10 @@ export class InsertdialogComponent {
     private _snackBar : MatSnackBar) {}
 
   ngOnInit() : void {
+    let userCheck = JSON.parse(localStorage.getItem('user') as string)
+    this.user.id = userCheck.id
+    this.user.email = userCheck.email
+
     this.taskForm = this.formBuilder.group({
       task: ['', Validators.required], 
       info: [''],
@@ -73,6 +82,7 @@ export class InsertdialogComponent {
           }
         })  
       } else {
+        this.taskForm.value.user = this.user.id
         this.api.postTask(this.taskForm.value)
         .subscribe({
           next:(res) => {

@@ -39,7 +39,7 @@ export class AuthenticateComponent {
             this.authenticateForm.reset()
             if (res.length > 0) {
               this.openSnackBar("Login successful!")
-              localStorage.setItem('user', JSON.stringify(res))
+              localStorage.setItem('user', JSON.stringify(res[0]))
               this.router.navigate(['/'])
             } else {
               this.openSnackBar("Couldn't find user. Please try again!")
