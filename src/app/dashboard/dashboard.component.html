@@ -1,32 +1,47 @@
 <mat-toolbar>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>done_all</mat-icon>
-    </button>
-    <span>Todo List</span>
-    <span class="example-spacer"></span>
-    <button title="Add a List" mat-icon-button (click)="addListDialog()" class="example-icon add-icon"
-      aria-label="Example icon-button with heart icon">
-      <mat-icon>add</mat-icon>
-    </button>
-    <button title="Logout" mat-icon-button (click)="logout()" class="example-icon add-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>login</mat-icon>
-    </button>
-  </mat-toolbar>
-  
-  <div *ngIf="isDataEmpty === 0">
-    <p>No tasks to display</p>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="navigateHome()">
+    <mat-icon>done_all</mat-icon>
+  </button>
+  <span>Todo List</span>
+  <span class="example-spacer"></span>
+  <button title="User Lists" mat-icon-button (click)="showUserLists()" class="example-icon add-icon"
+    *ngIf="this.user.admin === 0" aria-label="Example icon-button with heart icon">
+    <mat-icon>supervisor_account</mat-icon>
+  </button>
+  <button title="Add a List" mat-icon-button (click)="addListDialog()" class="example-icon add-icon"
+    aria-label="Example icon-button with heart icon">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button title="Logout" mat-icon-button (click)="logout()" class="example-icon add-icon"
+    aria-label="Example icon-button with heart icon">
+    <mat-icon>login</mat-icon>
+  </button>
+</mat-toolbar>
+<div *ngIf="showUserList === false">
+  <div *ngIf="isDataEmpty === 0" class="container">
+    <h3>No tasks to display</h3>
   </div>
   <div *ngIf="isDataEmpty !== 0">
     <div *ngIf="tasks.length !== 0">
       <mat-grid-list cols="4" rowHeight="3:1">
-        <span *ngFor="let task of tasks" >
-        <mat-grid-tile (click)="viewTaskDialog(task)" [style.background]="task?._color">
-          <div>
-            <b>{{task?.task}}</b>
-            <p>{{task?.info}}</p>
-        </div>
-        </mat-grid-tile>
-      </span>
+        <span *ngFor="let task of tasks">
+          <mat-grid-tile (click)="viewTaskDialog(task)" [style.background]="task?._color">
+            <div>
+              <b>{{task?.task}}</b>
+              <p>{{task?.info}}</p>
+            </div>
+          </mat-grid-tile>
+        </span>
       </mat-grid-list>
     </div>
   </div>
+</div>
+<div *ngIf="showUserList === true" class="container">
+  <h3>User Lists</h3>
+  <mat-list>
+    <mat-list-item *ngFor='let user of users'>
+      <span matListItemTitle>{{user.email}}<span *ngIf="user.admin===0"> (Admin)</span></span>
+      <span matListItemLine>{{user.task}} notes</span>
+    </mat-list-item>
+  </mat-list>
+</div>

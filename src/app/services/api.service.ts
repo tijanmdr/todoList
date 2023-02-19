@@ -32,4 +32,12 @@ export class ApiService {
   getUser (email:string, pwd:string) {
     return this.http.get<any>(this.baseUrl+"users?email="+email+"&password="+pwd)
   }
+
+  getAllUsers() {
+    return this.http.get<any>(this.baseUrl+"users")
+  }
+
+  getUsersTasks() {
+    return this.http.get<any>(this.baseUrl+"tasks")
+  }
 }

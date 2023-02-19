@@ -1,8 +1,9 @@
 import { Router } from '@angular/router';
 import { ApiService } from './../services/api.service';
 import { InsertdialogComponent } from './../insertdialog/insertdialog.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TRANSLATIONS } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,14 +16,18 @@ export class DashboardComponent implements OnInit {
   isDataEmpty = 0;
   user = {
     id: 0, 
-    email: null
+    email: null,
+    admin: 1
   };
+  users !: any[];
+  userTasks !: any[];
+
+  showUserList = false
 
   constructor(private dialog : MatDialog, private api : ApiService, private router : Router) {}
 
   typesOfTasks:DashboardComponent[] = [];
   ngOnInit(): void {
-
     // check if the user is logged in or not
     if ( !localStorage.getItem('user')) 
       this.router.navigate(['/login'])
@@ -30,9 +35,9 @@ export class DashboardComponent implements OnInit {
       let userCheck = JSON.parse(localStorage.getItem('user') as string)
       this.user.id = userCheck.id
       this.user.email = userCheck.email
+      this.user.admin = userCheck.admin
       this.loadTasks(userCheck.id)
     }
-    
   }
   
   loadTasks(user:number) {
@@ -73,6 +78,30 @@ export class DashboardComponent implements OnInit {
       }
       this.isDataEmpty = 1
     });
+  }
+
+  showUserLists() {
+    this.api.getAllUsers().subscribe(users=>{
+      this.users = users;
+      this.api.getUsersTasks().subscribe((tasks:any[])=>{
+        this.users.forEach(user=>{
+          user.task = 0;
+          tasks.forEach(task => {
+            if (task.user === user.id) {
+              user.task++
+              console.log(this.users);
+            }
+          });
+        })  
+        this.showUserList = true
+      })
+    })
+
+    
+  }
+
+  navigateHome() {
+    this.showUserList = false
   }
 
   addListDialog() {
