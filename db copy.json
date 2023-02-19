@@ -1,0 +1,13 @@
+{
+  "tasks": [
+    
+  ],
+  "users": [
+    {
+      "email": "tijanmdr@gmail.com",
+      "password": "qwerty123",
+      "id": 1,
+      "admin": 0
+    }
+  ]
+}
