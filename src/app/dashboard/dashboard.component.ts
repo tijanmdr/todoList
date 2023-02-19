@@ -18,6 +18,11 @@ export class DashboardComponent implements OnInit {
 
   typesOfTasks:DashboardComponent[] = [];
   ngOnInit(): void {
+
+    // check if the user is logged in or not
+    if ( !localStorage.getItem('user')) 
+      this.router.navigate(['/login'])
+    
     this.loadTasks()
   }
   
