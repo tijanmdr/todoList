@@ -58,6 +58,7 @@ export class AuthenticateComponent {
   register(): void {
     if (this.authenticateForm.valid) {
       if (this.authenticateForm.controls['password'].value === this.password_confirmation) {
+        this.authenticateForm.value.admin = 1; // normal users always set to 1
         this.api.postUser(this.authenticateForm.value)
           .subscribe({
             next: (res) => {
