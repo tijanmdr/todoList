@@ -8,6 +8,9 @@
     *ngIf="this.user.admin === 0" aria-label="Example icon-button with heart icon">
     <mat-icon>supervisor_account</mat-icon>
   </button>
+  <mat-select [(ngModel)]="selectedLang" class="selectLang">
+    <mat-option *ngFor="let lang of langs" [value]="lang.code">{{lang.name}}</mat-option>
+  </mat-select>
   <button title="Add a List" mat-icon-button (click)="addListDialog()" class="example-icon add-icon"
     aria-label="Example icon-button with heart icon">
     <mat-icon>add</mat-icon>
@@ -25,10 +28,18 @@
     <div *ngIf="tasks.length !== 0">
       <mat-grid-list cols="4" rowHeight="3:1">
         <span *ngFor="let task of tasks">
-          <mat-grid-tile (click)="viewTaskDialog(task)" [style.background]="task?._color">
+          <mat-grid-tile [style.background]="task?._color">
             <div>
+              <div class="_main" *ngIf="!task?.translations">
               <b>{{task?.task}}</b>
               <p>{{task?.info}}</p>
+            </div>
+            <div class="_facade" *ngIf="task?.translations">
+              <b>{{task?.translations[0]}}</b>
+              <p>{{task?.translations[1]}}</p>
+            </div>
+              <p><span (click)="translateTask(task)" class="_link">Translate</span> | 
+              <span (click)="viewTaskDialog(task)" class="_link">Edit</span></p>
             </div>
           </mat-grid-tile>
         </span>

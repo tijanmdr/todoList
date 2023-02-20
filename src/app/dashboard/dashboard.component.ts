@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiService } from './../services/api.service';
 import { InsertdialogComponent } from './../insertdialog/insertdialog.component';
@@ -19,6 +20,17 @@ export class DashboardComponent implements OnInit {
     email: null,
     admin: 1
   };
+  translates !: any[]
+  langs = [
+    {name: 'English', code: 'en'},
+    {name: 'Spanish', code: 'es'},
+    {name: 'French', code: 'fr'},
+    {name: 'Italian', code: 'it'},
+    {name: 'Nepali', code: 'ne'},
+    {name: 'Hindi', code: 'hi'},
+  ];
+
+  selectedLang: String = 'en';
   users !: any[];
   userTasks !: any[];
 
@@ -52,6 +64,22 @@ export class DashboardComponent implements OnInit {
       }, error: (res) => {
         this.isDataEmpty = 1;
       }
+    })
+  }
+
+  translateTask(data : any) {
+    let header = new HttpHeaders({'Ocp-Apim-Subscription-Region': 'australiaeast', 'Ocp-Apim-Subscription-Key': '1e86c5add19d47c5a446f91bbf8dde5b'});
+
+    const requestOptions = {  headers: header};                                                                                                                                                                            
+ 
+    let _data = [{'Text': data.task}, {'Text': data.info}]
+    this.api.getTranslations(this.selectedLang, _data, requestOptions)
+    .subscribe((result:any)=>{
+      data.translations = []
+      result.forEach((res:any) => {
+        data.translations.push(res.translations[0].text)
+      });
+      console.log(data);
     })
   }
 
@@ -95,9 +123,7 @@ export class DashboardComponent implements OnInit {
         })  
         this.showUserList = true
       })
-    })
-
-    
+    })    
   }
 
   navigateHome() {
@@ -110,8 +136,10 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.tasks.push(result)
-      this.isDataEmpty = 1
+      if (result) {
+        this.tasks.push(result)
+        this.isDataEmpty = 1
+      }
     });
   }
 

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class ApiService {
   baseUrl = 'http://localhost:3000/'
+  translationUri = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to='
 
   constructor(private http : HttpClient) { }
 
@@ -39,5 +40,9 @@ export class ApiService {
 
   getUsersTasks() {
     return this.http.get<any>(this.baseUrl+"tasks")
+  }
+
+  getTranslations(lang:any, data: any, headers:any) {
+    return this.http.post<any>(this.translationUri+lang, data, headers)
   }
 }

@@ -1,11 +1,19 @@
 .example-spacer {
-    flex: 1 1 auto;
-  }
-  
-  mat-grid-tile {
-    cursor: pointer;
-    text-align: center;
-  }
-  .container {
-    padding: 10px;
-  }
+  flex: 1 1 auto;
+}
+
+mat-grid-tile {
+  text-align: center;
+}
+
+.container {
+  padding: 10px;
+}
+
+.selectLang {
+  width: 8%;
+}
+
+._link {
+  cursor: pointer;
+}
