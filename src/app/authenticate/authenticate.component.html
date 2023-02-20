@@ -10,7 +10,7 @@
             <mat-card-title *ngIf="url===1">Register</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <form class="example-form" [formGroup]="authenticateForm">
+            <form class="example-form" [formGroup]="authenticateForm" (keyup.enter)="authenticate()">
                 <mat-form-field class="example-full-width">
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email" type="email" name="email" required>
@@ -24,8 +24,10 @@
                 <mat-label>Password Confirmation</mat-label>
                 <input matInput [(ngModel)]="password_confirmation" type="password" name="password_confirmation" required>
             </mat-form-field>
-            <button mat-flat-button (click)="login()" color="primary" *ngIf="url===0">Login</button>
-            <button mat-flat-button (click)="register()" color="primary" *ngIf="url===1">Register</button>
+            <button mat-flat-button (click)="authenticate()" color="primary">
+                <span *ngIf="url===0">Login</span>
+                <span *ngIf="url===1">Register</span>
+            </button>
         </mat-card-content>
     </mat-card>
 </div>

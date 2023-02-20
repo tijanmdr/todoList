@@ -31,6 +31,10 @@ export class AuthenticateComponent {
     }
   }
 
+  authenticate() {
+    (this.url === 0) ? this.login() : this.register();
+  }
+
   login(): void {
     if (this.authenticateForm.valid) {
       this.api.getUser(this.authenticateForm.controls['email'].value, this.authenticateForm.controls['password'].value)

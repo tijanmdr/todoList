@@ -70,6 +70,7 @@ export class InsertdialogComponent {
   insertTask() {
     if (this.taskForm.valid) {
       if (this.editData) {
+        this.taskForm.value.user = this.user.id
         this.api.updateTask(this.taskForm.value, this.editData.id)
         .subscribe({
           next:(res) => {
