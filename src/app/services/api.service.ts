@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-  baseUrl = 'http://localhost:3000/'
+  baseUrl = 'https://dry-wave-16087.herokuapp.com/'
   translationUri = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to='
 
   constructor(private http : HttpClient) { }

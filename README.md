@@ -9,6 +9,7 @@ In your base project folder, type in the following commands.
 - `npm install -g @angular/cli` - to install angular cli
 - `npm install -g json-server` - used fake json server to use in the application
 - `npm install` - to install dependencies required for the application
+- `cp _db.json db.json` - json server database (for offline access only - change `baseUrl` variable to `http://localhost:3000` in `src/app/services/api.service.ts`)
 
 ## Development server
 
