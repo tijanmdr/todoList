@@ -31,13 +31,13 @@ jobs:
     # - run: npm test
     
     - name: copy file via ssh key
-        uses: tijanmdr/todoList@master
+        uses: appleboy/scp-action@master
         env:
           HOST:  ${{ secrets.HOST }}
           USERNAME:  ${{ secrets.USERNAME }}
           PORT:  80
           PASSWORD: ${{ secrets.PASSWORD }}
         with:
-          source: "./todoList"
+          source: "./todoList/"
           target: "/var/www/html/todoList/"
           strip_components: 2
