@@ -31,12 +31,12 @@ jobs:
     # - run: npm test
     
     - name: copy file via ssh key
-        uses: appleboy/scp-action@master
-        with:
-          host:  ${{ secrets.HOST }}
-          username:  ${{ secrets.USERNAME }}
-          port:  22
-          password: ${{ secrets.PASSWORD }}
-          source: "./todoList/"
-          target: "/var/www/html/todoList/"
-          strip_components: 2
+      uses: appleboy/scp-action@master
+      with:
+        host:  ${{ secrets.HOST }}
+        username:  ${{ secrets.USERNAME }}
+        port:  22
+        password: ${{ secrets.PASSWORD }}
+        source: "./todoList/"
+        target: "/var/www/html/todoList/"
+        strip_components: 2
