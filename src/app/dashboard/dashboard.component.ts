@@ -26,7 +26,6 @@ export class DashboardComponent implements OnInit {
     {name: 'Spanish', code: 'es'},
     {name: 'French', code: 'fr'},
     {name: 'Italian', code: 'it'},
-    {name: 'Nepali', code: 'ne'},
     {name: 'Hindi', code: 'hi'},
   ];
 
