@@ -36,7 +36,7 @@ jobs:
         host:  ${{ secrets.HOST }}
         username:  ${{ secrets.USERNAME }}
         port:  22
-        password: ${{ secrets.PASSWORD }}
+        key: ${{ secrets.KEY }}
         source: "./todoList/"
         target: "/var/www/html/todoList/"
         strip_components: 2
