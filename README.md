@@ -1,6 +1,6 @@
 # TodoList
 
-This project is created by Tijan Manandhar as a part of the assessment. 
+This is is to do list application written in Angular with Translation Service with different languages with the help of Microsoft Translator.
 
 ## Prerequisites:
 
