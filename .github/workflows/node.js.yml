@@ -29,3 +29,15 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     # - run: npm test
+    
+    - name: copy file via ssh key
+        uses: tijanmdr/todoList@master
+        env:
+          HOST:  ${{ secrets.HOST }}
+          USERNAME:  ${{ secrets.USERNAME }}
+          PORT:  80
+          PASSWORD: ${{ secrets.PASSWORD }}
+        with:
+          source: "./todoList"
+          target: "/var/www/html/todoList/"
+          strip_components: 2
