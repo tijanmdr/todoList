@@ -2,9 +2,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiService } from './../services/api.service';
 import { InsertdialogComponent } from './../insertdialog/insertdialog.component';
-import { Component, OnInit, TRANSLATIONS } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,16 +11,15 @@ import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  title = 'To Do List';
-  tasks !: any[];
-  isDataEmpty = 0;
-  user = {
+  tasks !: any[]; // to store tasks list after api call on ngInit()
+  isDataEmpty = 0; // to check if the task list is empty or not 
+  
+  user = { // user object to store user data parsed from localstorage
     id: 0, 
     email: null,
     admin: 1
   };
-  translates !: any[]
-  langs = [
+  langs = [ // language options to show to the user for user preferred language translations
     {name: 'English', code: 'en'},
     {name: 'Spanish', code: 'es'},
     {name: 'French', code: 'fr'},
@@ -30,28 +28,39 @@ export class DashboardComponent implements OnInit {
     {name: 'Hindi', code: 'hi'},
   ];
 
-  selectedLang: String = 'en';
-  users !: any[];
-  userTasks !: any[];
+  selectedLang: String = 'en'; // user selected language for translation
+  users !: any[]; // user list that is only accessible for admins only 
 
-  showUserList = false
+  showUserList = false // boolean to check if the admin is on task or user interface
 
+  /**
+   * 
+   * @param dialog MatDialog instance for dialog functionality
+   * @param api API service to call api functions 
+   * @param router to manage navigation
+   */
   constructor(private dialog : MatDialog, private api : ApiService, private router : Router) {}
 
-  typesOfTasks:DashboardComponent[] = [];
+  /**
+   * triggers ngOnInit() as the page opens
+   */
   ngOnInit(): void {
-    // check if the user is logged in or not
-    if ( !localStorage.getItem('user')) 
+    // check if the user is logged in or not using previously saved data in localstorage during login process
+    if ( !localStorage.getItem('user')) // check if the user data is saved in localstorage during login or not
       this.router.navigate(['/login'])
-    else {
+    else { // parse user data from localstorage and update in user object
       let userCheck = JSON.parse(localStorage.getItem('user') as string)
       this.user.id = userCheck.id
       this.user.email = userCheck.email
       this.user.admin = userCheck.admin
-      this.loadTasks(userCheck.id)
+      this.loadTasks(userCheck.id) // load tasks of the current user
     }
   }
   
+  /**
+   * Load user data
+   * @param user user id 
+   */
   loadTasks(user:number) {
     this.api.getTasks(user)
     .subscribe({
@@ -59,14 +68,18 @@ export class DashboardComponent implements OnInit {
         this.tasks = res
         setTimeout(()=>{
           if (res.length !== 0)
-            this.isDataEmpty = 1
+            this.isDataEmpty = 1 // actually working as a loader but just with the text
         }, 500)
       }, error: (res) => {
-        this.isDataEmpty = 1;
+        this.isDataEmpty = 0;
       }
     })
   }
 
+  /**
+   * To translate task with user preferred language
+   * @param data task data like task title and info
+   */
   translateTask(data : any) {
     let header = new HttpHeaders({'Ocp-Apim-Subscription-Region': 'australiaeast', 'Ocp-Apim-Subscription-Key': '1e86c5add19d47c5a446f91bbf8dde5b'});
 
@@ -79,10 +92,13 @@ export class DashboardComponent implements OnInit {
       result.forEach((res:any) => {
         data.translations.push(res.translations[0].text)
       });
-      console.log(data);
     })
   }
 
+  /**
+   * view task dialog and show data with update form as well
+   * @param data task data of the selected to show in the dialog
+   */
   viewTaskDialog(data : any) {
     const dialogRef = this.dialog.open(InsertdialogComponent, {
       width: '30%', 
@@ -108,6 +124,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * Show user lists along with tasks number for admin access
+   */
   showUserLists() {
     this.api.getAllUsers().subscribe(users=>{
       this.users = users;
@@ -117,7 +136,6 @@ export class DashboardComponent implements OnInit {
           tasks.forEach(task => {
             if (task.user === user.id) {
               user.task++
-              console.log(this.users);
             }
           });
         })  
@@ -130,6 +148,9 @@ export class DashboardComponent implements OnInit {
     this.showUserList = false
   }
 
+  /**
+   * Open task add dialog
+   */
   addListDialog() {
     const dialogRef = this.dialog.open(InsertdialogComponent, {
       width: '30%'
@@ -143,6 +164,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * Logout function. Just remove from localstorage and navigate
+   */
   logout() {
     localStorage.removeItem('user')
     this.router.navigate(['login']);

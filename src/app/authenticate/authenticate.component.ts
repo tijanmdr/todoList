@@ -16,73 +16,83 @@ export class AuthenticateComponent {
     private FormBuilder: FormBuilder,
     private api: ApiService) { }
 
-  password_confirmation: string = "";
+  password_confirmation: string = ""; // to confirm with the password if they match or not
 
-  url: number = 0;
+  url: number = 0; // 0 - login and 1 - register (validated on ngInit())
 
   ngOnInit() {
+    // Form builder with the validator set
     this.authenticateForm = this.FormBuilder.group({
       email: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9._%+-]{2,}[.][A-Za-z]{2,}$')]],
       password: ['', Validators.required],
     })
 
-    if (this.router.url.includes('register')) {
+    if (this.router.url.includes('register')) { // check if the current page is register or login
       this.url = 1
     }
   }
 
+  /**
+   * Button callback from the form
+   */
   authenticate() {
-    (this.url === 0) ? this.login() : this.register();
+    if (this.authenticateForm.valid) { // check if the form is valid or not
+      (this.url === 0) ? this.login() : this.register();
+    } else {
+      this.openSnackBar('Something wrong with the registration data. Please fill up the inputs correctly!')
+    }
   }
 
+  /**
+   * Login functionality 
+   */
   login(): void {
-    if (this.authenticateForm.valid) {
-      this.api.getUser(this.authenticateForm.controls['email'].value, this.authenticateForm.controls['password'].value)
+    // api call for login data
+    this.api.getUser(this.authenticateForm.controls['email'].value, this.authenticateForm.controls['password'].value)
+      .subscribe({
+        next: (res) => {
+          this.authenticateForm.reset() // reset form after login
+          if (res.length > 0) {
+            this.openSnackBar("Login successful!")
+            localStorage.setItem('user', JSON.stringify(res[0])) // set user details in localstorage
+            this.router.navigate(['/'])
+          } else {
+            this.openSnackBar("Couldn't find user. Please try again!")
+          }
+
+        }, error: (res) => {
+          this.openSnackBar('Server Error!')
+        }
+      })
+  }
+
+  /**
+   * Register functionality
+   */
+  register(): void {
+    if (this.authenticateForm.controls['password'].value === this.password_confirmation) {
+      this.authenticateForm.value.admin = 1; // normal users always set to 1
+      this.api.postUser(this.authenticateForm.value)
         .subscribe({
           next: (res) => {
-            this.authenticateForm.reset()
-            if (res.length > 0) {
-              this.openSnackBar("Login successful!")
-              localStorage.setItem('user', JSON.stringify(res[0]))
-              this.router.navigate(['/'])
-            } else {
-              this.openSnackBar("Couldn't find user. Please try again!")
-            }
+            this.authenticateForm.reset() // reset form data
+            this.openSnackBar('Account creation successful!')
+            this.router.navigate(['/login'])
 
           }, error: (res) => {
             this.openSnackBar('Server Error!')
           }
         })
-
     } else {
-      this.openSnackBar('Something wrong with the registration data. Please fill up the inputs correctly!')
+      this.openSnackBar('Passwords does not match!')
     }
   }
 
-  register(): void {
-    if (this.authenticateForm.valid) {
-      if (this.authenticateForm.controls['password'].value === this.password_confirmation) {
-        this.authenticateForm.value.admin = 1; // normal users always set to 1
-        this.api.postUser(this.authenticateForm.value)
-          .subscribe({
-            next: (res) => {
-              this.authenticateForm.reset()
-              this.openSnackBar('Account creation successful!')
-              this.router.navigate(['/login'])
-
-            }, error: (res) => {
-              this.openSnackBar('Server Error!')
-            }
-          })
-      } else {
-        this.openSnackBar('Passwords does not match!')
-      }
-    } else {
-      this.openSnackBar('Something wrong with the registration data. Please fill up the inputs correctly!')
-    }
-  }
-
-  openSnackBar(msg:string) {
+  /**
+   * Snack bar to show mesage that is dismissible
+   * @param msg message to show
+   */
+  openSnackBar(msg: string) {
     this._snackBar.open(msg, "OK", {
       horizontalPosition: "right",
       verticalPosition: "bottom",

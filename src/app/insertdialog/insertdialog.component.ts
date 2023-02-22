@@ -11,13 +11,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class InsertdialogComponent {
   taskForm !: FormGroup;
-  actionBtn:String = 'Insert';
+  actionBtn:String = 'Insert'; // default button as string. will be changed according to user action
 
-  user = {
+  user = { // user object to store user data parsed from localstorage
     id: null, 
     email: null
   };
 
+  // task can be labelled in colors as well. Different options of colors for users
   tileColors : any[] = [
     {'color':'lightblue', 'name':'Light Blue'},
     {'color':'lightgreen', 'name':'Light Green'},
@@ -25,7 +26,7 @@ export class InsertdialogComponent {
     {'color':'#DDBDF1', 'name':'Light Purple'},
   ];
 
-  selectedOption: String = 'lightblue';
+  selectedOption: String = 'lightblue'; // selected default color
 
   constructor (private formBuilder : FormBuilder, 
     private api : ApiService, 
@@ -33,43 +34,31 @@ export class InsertdialogComponent {
     private dialogRef: MatDialogRef<InsertdialogComponent>, 
     private _snackBar : MatSnackBar) {}
 
-  ngOnInit() : void {
+  ngOnInit() : void { // parse user data from localstorage and update in user object
     let userCheck = JSON.parse(localStorage.getItem('user') as string)
     this.user.id = userCheck.id
     this.user.email = userCheck.email
 
-    this.taskForm = this.formBuilder.group({
+    this.taskForm = this.formBuilder.group({ // creating a form data with validation
       task: ['', Validators.required], 
       info: [''],
       _color: ['', Validators.required]
     })
 
-    if (this.editData) {
-      console.log(this.editData);
+    if (this.editData) { // check if the data is injected from clicking the view button 
       this.actionBtn = 'Update'
       this.taskForm.controls['task'].setValue(this.editData.task)
       this.taskForm.controls['info'].setValue(this.editData.info)
       this.taskForm.controls['_color'].setValue(this.editData._color)
     }
   }
-  deleteTask() {
-      if (this.editData.id) {
-        this.api.deleteTask(this.editData, this.editData.id)
-        .subscribe({
-          next:(res)=> {
-            this.taskForm.reset()
-            this.dialogRef.close('delete')
-            this.openSnackBar('Task deleted!')
-          },
-          error: () => {
-            this.openSnackBar('There was some error while deleting a task!')
-          }
-        })
-      }
-  }
+
+  /**
+   * Insert or udpate task
+   */
   insertTask() {
     if (this.taskForm.valid) {
-      if (this.editData) {
+      if (this.editData) { // update data
         this.taskForm.value.user = this.user.id
         this.api.updateTask(this.taskForm.value, this.editData.id)
         .subscribe({
@@ -82,7 +71,7 @@ export class InsertdialogComponent {
             this.openSnackBar('There was some error while adding a task!')
           }
         })  
-      } else {
+      } else { // insert data
         this.taskForm.value.user = this.user.id
         this.api.postTask(this.taskForm.value)
         .subscribe({
@@ -101,6 +90,29 @@ export class InsertdialogComponent {
     }
   }
 
+  /**
+   * Delete task
+   */
+  deleteTask() {
+      if (this.editData.id) {
+        this.api.deleteTask(this.editData, this.editData.id)
+        .subscribe({
+          next:(res)=> {
+            this.taskForm.reset()
+            this.dialogRef.close('delete')
+            this.openSnackBar('Task deleted!')
+          },
+          error: () => {
+            this.openSnackBar('There was some error while deleting a task!')
+          }
+        })
+      }
+  }
+  
+  /**
+   * Snack bar to show mesage that is dismissible
+   * @param msg message to show
+   */
   openSnackBar(msg:string) {
     this._snackBar.open(msg, "OK", {
       horizontalPosition: "right",
