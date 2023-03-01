@@ -1,3 +1,5 @@
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InsertdialogComponent } from './insertdialog.component';
@@ -8,7 +10,8 @@ describe('InsertdialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InsertdialogComponent ]
+      declarations: [ InsertdialogComponent ], 
+      imports: [ HttpClientModule ],
     })
     .compileComponents();
 
