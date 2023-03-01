@@ -1,4 +1,9 @@
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -11,7 +16,15 @@ describe('InsertdialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ InsertdialogComponent ], 
-      imports: [ HttpClientModule ],
+      imports: [ 
+        HttpClientModule, 
+        MatSnackBarModule,
+        MatToolbarModule, 
+        MatDialogModule, 
+        MatFormFieldModule, 
+        MatSelectModule, 
+        MatIconModule
+      ],
       providers: [{ provide: MatDialogRef, useValue: {}}, { provide: MAT_DIALOG_DATA, useValue: {} }, ]
 
     })

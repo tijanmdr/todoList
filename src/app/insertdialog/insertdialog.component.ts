@@ -35,9 +35,11 @@ export class InsertdialogComponent {
     private _snackBar : MatSnackBar) {}
 
   ngOnInit() : void { // parse user data from localstorage and update in user object
-    let userCheck = JSON.parse(localStorage.getItem('user') as string)
-    this.user.id = userCheck.id
-    this.user.email = userCheck.email
+    if ( localStorage.getItem('user')) {
+      let userCheck = JSON.parse(localStorage.getItem('user') as string)
+      this.user.id = userCheck.id
+      this.user.email = userCheck.email
+    }
 
     this.taskForm = this.formBuilder.group({ // creating a form data with validation
       task: ['', Validators.required], 

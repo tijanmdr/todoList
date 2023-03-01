@@ -1,9 +1,13 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { AuthenticateComponent } from './authenticate.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 describe('AuthenticateComponent', () => {
   let component: AuthenticateComponent;
@@ -12,7 +16,16 @@ describe('AuthenticateComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ AuthenticateComponent ],
-      imports: [ MatDialogModule, MatSnackBarModule, HttpClientModule ],
+      imports: [ 
+        MatDialogModule, 
+        MatSnackBarModule, 
+        HttpClientModule, 
+        MatCardModule, 
+        MatDividerModule, 
+        MatFormFieldModule, 
+        FormsModule, 
+        ReactiveFormsModule
+      ],
     })
     .compileComponents();
 
