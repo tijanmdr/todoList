@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,7 +24,10 @@ describe('InsertdialogComponent', () => {
         MatDialogModule, 
         MatFormFieldModule, 
         MatSelectModule, 
-        MatIconModule
+        MatIconModule, 
+        FormsModule, 
+        ReactiveFormsModule
+        
       ],
       providers: [{ provide: MatDialogRef, useValue: {}}, { provide: MAT_DIALOG_DATA, useValue: {} }, ]
 
