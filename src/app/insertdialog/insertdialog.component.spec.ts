@@ -12,6 +12,8 @@ describe('InsertdialogComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ InsertdialogComponent ], 
       imports: [ HttpClientModule ],
+      providers: [{ provide: MatDialogRef, useValue: {}}, { provide: MAT_DIALOG_DATA, useValue: {} }, ]
+
     })
     .compileComponents();
 
