@@ -1,3 +1,5 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
@@ -24,7 +26,9 @@ describe('AuthenticateComponent', () => {
         MatDividerModule, 
         MatFormFieldModule, 
         FormsModule, 
-        ReactiveFormsModule
+        ReactiveFormsModule, 
+        MatInputModule, 
+        BrowserAnimationsModule
       ],
     })
     .compileComponents();

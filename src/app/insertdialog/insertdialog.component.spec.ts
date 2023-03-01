@@ -1,3 +1,5 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
@@ -26,7 +28,9 @@ describe('InsertdialogComponent', () => {
         MatSelectModule, 
         MatIconModule, 
         FormsModule, 
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatInputModule, 
+        BrowserAnimationsModule
         
       ],
       providers: [{ provide: MatDialogRef, useValue: {}}, { provide: MAT_DIALOG_DATA, useValue: {} }, ]
